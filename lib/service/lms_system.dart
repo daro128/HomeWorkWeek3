@@ -83,9 +83,9 @@ class LmsSystem {
       throw Exception("The Course is not found>.");
     }
 
-    final hasEnrollment = enrollments.any((e)=> e.studentId == studentId && e.courseId == studentId);
+    final hasEnrollment = enrollments.any((e)=> e.studentId == studentId && e.courseId == courseId);
     if(hasEnrollment){
-        throw Exception("Student already Enroll>.");
+        throw Exception("Student and course already Enroll>.");
     }
 
     enrollments.add(Enrollment(studentId: studentId, courseId: courseId));   
@@ -93,11 +93,11 @@ class LmsSystem {
 
   void discardStudentFromCourse({required String studentId,required String courseId}) {
     if(_findCourseOrNull(courseId) == null){
-      throw Exception("The student is not exist>.");
+      throw Exception("The course is not found>.");
     }
 
     if(_findStudentOrNull(studentId) == null){
-      throw Exception("The course is not exist>.");
+      throw Exception("The student is not found>.");
     }
 
     final hasEnrolled = enrollments.any((e)=> e.courseId == courseId && e.studentId == studentId);
@@ -116,11 +116,11 @@ class LmsSystem {
 
   void addResult({required String resultId,required String studentId,required String courseId,required double score}) {
     if(_findCourseOrNull(courseId) == null){
-      throw Exception("The student is not exist>.");
+      throw Exception("The course is not found>.");
     }
 
     if(_findStudentOrNull(studentId) == null){
-      throw Exception("The course is not exist>.");
+      throw Exception("The student is not found>.");
     }
 
     final hasEnrolled = enrollments.any((e)=> e.courseId == courseId && e.studentId == studentId);
@@ -128,7 +128,7 @@ class LmsSystem {
       throw Exception("Enroll not found>.");
     }
 
-    if(score< 0 && score> 100){
+    if(score< 0 || score> 100){
       throw Exception("score must be between 0 to 100");
     }
 
